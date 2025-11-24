@@ -131,11 +131,9 @@ docker run hello-world
 ### Step 4: Get the Project Files
 
 1.  Open your terminal.
-2.  Create a folder and download the project files (or clone this repository).
+2.  Download the project files or clone this repository.
     ```bash
-    mkdir BLM_Project
-    cd BLM_Project
-    # (Ensure .va, .sp, Dockerfile, and run.sh are in this folder)
+    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git && cd BLM-1T1R-Array-Sim && chmod +x run.sh
     ```
 
 -----
