@@ -43,18 +43,32 @@ If you are on Windows, you need a Linux environment to run the scripts easily.
 3.  **Restart your computer** when prompted.
 4.  After restarting, Ubuntu will open automatically. Follow the instructions to create a username and password.
 
-### Step 2: Install Docker Desktop
+### Step 2: Install Docker
 
-Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into a single "box" so you don't have to install them manually.
+Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into a single "box".
 
-1.  Download **Docker Desktop for Windows** from [docker.com](https://www.docker.com/products/docker-desktop/).
-2.  Run the installer. **Make sure to check the box "Use WSL 2 based engine"**.
-3.  Once installed, open Docker Desktop settings:
-      * Go to **Resources** \> **WSL Integration**.
-      * Enable the integration for your Linux distribution (e.g., "Ubuntu").
-      * Click **Apply & Restart**.
+**For Windows / Mac:**
 
-### Step 3: Get the Project Files
+1.  Download **Docker Desktop** from [docker.com](https://www.docker.com/products/docker-desktop/).
+2.  Run the installer. **(Windows Users: Check "Use WSL 2 based engine")**.
+3.  Start Docker Desktop and wait for the engine to start.
+
+**For Linux:**
+
+  * Follow the official guide to install Docker Engine for your distribution.
+
+### Step 3: Verify Docker Installation
+
+Open your terminal (Ubuntu/WSL or Command Prompt) and run the following test command:
+
+```bash
+docker run hello-world
+```
+
+  * **Success:** If you see a message saying `Hello from Docker!`, you are ready to go.
+  * **Failure:** If you see `permission denied` or `connect to the Docker daemon socket`, please refer to the **Troubleshooting** section below.
+
+### Step 4: Get the Project Files
 
 1.  Open your Ubuntu (WSL) terminal.
 2.  Create a folder and download the project files (clone this repository if using Git).
@@ -117,6 +131,17 @@ You will see new **.png** image files (e.g., `array_result.png`).
 -----
 
 ## ❓ Troubleshooting
+
+**Error: `docker: permission denied while trying to connect to the Docker daemon socket`**
+
+  * **Cause:** On standard Linux installations, the current user does not have permission to access Docker.
+  * **Fix:** Add your user to the `docker` group to run commands without `sudo`. Run these commands:
+    ```bash
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+    ```
+    *Try running `docker run hello-world` again after this.*
 
 **Error: `bad interpreter: /bin/bash^M: No such file or directory`**
 
