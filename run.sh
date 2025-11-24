@@ -83,8 +83,6 @@ mkdir -p plot
 # Remove old artifacts
 rm -f *.ps 
 rm -f generated_images.list
-# Clean only old pngs in the plot folder to avoid confusion
-rm -f plot/*.png
 
 # 3. Compile Verilog-A Model
 echo "========================================"
