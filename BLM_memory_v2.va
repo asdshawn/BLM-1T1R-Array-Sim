@@ -1,0 +1,65 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Verilog-A model for a Bipolar Switching Resistive Memory (RRAM/Memristor)
+// This model uses an integrator-based state variable for numerical stability.
+module BLM_memory(p, n);
+    inout p, n;
+    electrical p, n;
+
+    // --- Device Parameters (Based on Specification Page 5) ---
+    parameter real VT_set    = 0.75;      // Threshold voltage for SET (Low Resistance)
+    parameter real VT_reset  = 0.92;      // Threshold voltage for RESET (High Resistance)
+    
+    // Note: p_set and p_reset are resistivity parameters from the spec, 
+    // but this behavioral model uses R_OFF and R_ON for array stability.
+    parameter real p_set     = 1.6e9;
+    parameter real p_reset   = 6.6e9;
+    parameter real ss_dec    = 0.241771;  // Subthreshold swing parameter
+    parameter real V_h       = 0.4;       // Holding voltage
+    parameter real I_h       = 50e-9;     // Holding current
+    
+    // --- Array Simulation Parameters ---
+    // Using a positive R_ON ensures convergence in large array simulations.
+    parameter real R_OFF     = 1.0e6;     // High Resistance State (OFF) = 1 MOhm
+    parameter real R_ON      = 1000.0;    // Low Resistance State (ON) = 1 kOhm
+
+    // Internal variables
+    real Vdev, Idev, ss;
+    real set_rate, rst_rate, mem_state;
+
+    analog begin
+        // Initialization block
+        @(initial_step) begin
+            ss = ss_dec / ln(10.0);
+        end
+
+        // Get voltage across the device
+        Vdev = V(p, n);
+
+        // --- 1. State Evolution Logic (Integrator Method) ---
+        
+        // Determine SET rate: If V > 0.75V, charge the state variable rapidly
+        set_rate = (Vdev > VT_set) ? 1.0e9 : 0.0;
+        
+        // Determine RESET rate: If V < -0.92V, discharge the state variable rapidly
+        rst_rate = (Vdev < -VT_reset) ? 1.0e9 : 0.0;
+
+        // Calculate state by integrating the rates (State ranges from 0 to 1)
+        // 0 = RESET (High-Z), 1 = SET (Low-Z)
+        mem_state = idt(set_rate - rst_rate, 0);
+
+        // --- 2. State Clamping ---
+        // Ensure the state variable stays strictly within bounds [0, 1]
+        if (mem_state > 1.0) mem_state = 1.0;
+        if (mem_state < 0.0) mem_state = 0.0;
+
+        // --- 3. I-V Calculation (Linear Interpolation) ---
+        // Conductance mixing ensures a smooth transition and numerical stability.
+        // I = V * (G_total)
+        Idev = Vdev * ( (1.0 - mem_state)/R_OFF + mem_state/R_ON );
+
+        // Output current contribution
+        I(p, n) <+ Idev;
+    end
+endmodule
