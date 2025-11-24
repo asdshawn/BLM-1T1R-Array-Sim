@@ -43,18 +43,32 @@ If you are on Windows, you need a Linux environment to run the scripts easily.
 3.  **Restart your computer** when prompted.
 4.  After restarting, Ubuntu will open automatically. Follow the instructions to create a username and password.
 
-### Step 2: Install Docker Desktop
+### Step 2: Install Docker
 
-Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into a single "box" so you don't have to install them manually.
+Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into a single "box".
 
-1.  Download **Docker Desktop for Windows** from [docker.com](https://www.docker.com/products/docker-desktop/).
-2.  Run the installer. **Make sure to check the box "Use WSL 2 based engine"**.
-3.  Once installed, open Docker Desktop settings:
-      * Go to **Resources** \> **WSL Integration**.
-      * Enable the integration for your Linux distribution (e.g., "Ubuntu").
-      * Click **Apply & Restart**.
+**For Windows / Mac:**
 
-### Step 3: Get the Project Files
+1.  Download **Docker Desktop** from [docker.com](https://www.docker.com/products/docker-desktop/).
+2.  Run the installer. **(Windows Users: Check "Use WSL 2 based engine")**.
+3.  Start Docker Desktop and wait for the engine to start.
+
+**For Linux:**
+
+  * Follow the official guide to install Docker Engine for your distribution.
+
+### Step 3: Verify Docker Installation
+
+Open your terminal (Ubuntu/WSL or Command Prompt) and run the following test command:
+
+```bash
+docker run hello-world
+```
+
+  * **Success:** If you see a message saying `Hello from Docker!`, you are ready to go.
+  * **Failure:** If you see `permission denied` or `connect to the Docker daemon socket`, please refer to the **[Troubleshooting](#-Troubleshooting)** section below.
+
+### Step 4: Get the Project Files
 
 1.  Open your Ubuntu (WSL) terminal.
 2.  Create a folder and download the project files (clone this repository if using Git).
@@ -86,13 +100,13 @@ Now, use the following command to start the simulation. This command starts the 
 **Syntax:**
 
 ```bash
-docker run --rm -v $(pwd):/work blm_env ./run.sh <SPICE_File> <VerilogA_File>
+./run.sh <SPICE_File> <VerilogA_File>
 ```
 
 **Example (Running the 2x2 Array Test):**
 
 ```bash
-docker run --rm -v $(pwd):/work blm_env ./run.sh 2x2_array_v2.sp BLM_memory_v2.va
+./run.sh 2x2_array_v2.sp BLM_memory_v2.va
 ```
 
 ### 3\. View the Results
@@ -109,14 +123,25 @@ You will see new **.png** image files (e.g., `array_result.png`).
 
   * **`Dockerfile`**: The recipe file that builds the simulation environment (installs Rust, ngspice, etc.).
   * **`run.sh`**: The automation script that compiles models and converts plots to PNG images.
-  * **`BLM_array.va`**: The physics-based Verilog-A model of the BLM memory cell.
-  * **`2x2_array.sp`**: The SPICE netlist describing the 2x2 circuit and the test sequence.
-  * **`1T1R_test.sp`**: (Optional) A simpler test file for a single memory cell.
+  * **`BLM_memory_v2.va`**: The physics-based Verilog-A model of the BLM memory cell.
+  * **`2x2_array_v2.sp`**: The SPICE netlist describing the 2x2 circuit and the test sequence.
+  * **`1T1R_cell_v2.sp`**: (Optional) A simpler test file for a single memory cell.
   * **`BLM - The Hypothetical Memory Cell.pdf`**: Reference file.
 
 -----
 
 ## ❓ Troubleshooting
+
+**Error: `docker: permission denied while trying to connect to the Docker daemon socket`**
+
+  * **Cause:** On standard Linux installations, the current user does not have permission to access Docker.
+  * **Fix:** Add your user to the `docker` group to run commands without `sudo`. Run these commands:
+    ```bash
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+    ```
+    *Try running `docker run hello-world` again after this.*
 
 **Error: `bad interpreter: /bin/bash^M: No such file or directory`**
 
