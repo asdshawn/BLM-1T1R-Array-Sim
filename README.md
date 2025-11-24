@@ -86,13 +86,13 @@ Now, use the following command to start the simulation. This command starts the 
 **Syntax:**
 
 ```bash
-docker run --rm -v $(pwd):/work blm_env ./run.sh <SPICE_File> <VerilogA_File>
+./run.sh <SPICE_File> <VerilogA_File>
 ```
 
 **Example (Running the 2x2 Array Test):**
 
 ```bash
-docker run --rm -v $(pwd):/work blm_env ./run.sh 2x2_array_v2.sp BLM_memory_v2.va
+./run.sh 2x2_array_v2.sp BLM_memory_v2.va
 ```
 
 ### 3\. View the Results
