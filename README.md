@@ -1,6 +1,6 @@
 # BLM-1T1R-Array-Sim 📦⚡
 
-[cite\_start]A complete simulation framework for a 2x2 **Bipolar Liquid Memory (BLM)** array using the **1T1R (1 Transistor - 1 Resistor)** architecture [cite: 333-335]. This project features a physics-based Verilog-A model, SPICE netlists, and a fully containerized Docker environment for automated waveform generation.
+A complete simulation framework for a 2x2 **Bipolar Liquid Memory (BLM)** array using the **1T1R (1 Transistor - 1 Resistor)** architecture. This project features a physics-based Verilog-A model, SPICE netlists, and a fully containerized Docker environment for automated waveform generation.
 
 No complex installation is required\! We use **Docker** to package all necessary tools (ngspice, OpenVAF, Ghostscript).
 
