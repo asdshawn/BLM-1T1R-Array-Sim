@@ -2,7 +2,7 @@
 
 Welcome to the **Bipolar Liquid Memory (BLM) Simulation Project**\!
 
-[cite\_start]This project provides a complete, containerized environment to simulate a next-generation non-volatile memory technology called **BLM** (Bipolar Liquid Memory)[cite: 31]. [cite\_start]We have implemented a physics-based Verilog-A model and expanded it into a **2x2 1T1R (1 Transistor - 1 Resistor) Crossbar Array** [cite: 333-335] to verify its read/write operations and anti-interference capabilities.
+This project provides a complete, containerized environment to simulate a next-generation non-volatile memory technology called **BLM** (Bipolar Liquid Memory). We have implemented a physics-based Verilog-A model and expanded it into a **2x2 1T1R (1 Transistor - 1 Resistor) Crossbar Array** to verify its read/write operations and anti-interference capabilities.
 
 **No complex installation required\!** We use **Docker** to package all necessary tools (ngspice, OpenVAF, Ghostscript). If you can follow a few simple steps, you can run professional-grade circuit simulations.
 
@@ -10,12 +10,12 @@ Welcome to the **Bipolar Liquid Memory (BLM) Simulation Project**\!
 
 ## 📚 What is BLM?
 
-[cite\_start]**BLM (Bipolar Liquid Memory)** is a hypothetical memory cell technology that stores data by changing its resistance state[cite: 31].
+**BLM (Bipolar Liquid Memory)** is a hypothetical memory cell technology that stores data by changing its resistance state.
 
-  * [cite\_start]**SET Operation (Write 1):** Applying a positive voltage ($>0.75V$) switches the device to a **Low Resistance State (LRS)**[cite: 67].
-  * [cite\_start]**RESET Operation (Write 0):** Applying a negative voltage ($<-0.92V$) switches the device back to a **High Resistance State (HRS)**[cite: 69].
+  * **SET Operation (Write 1):** Applying a positive voltage ($>0.75V$) switches the device to a **Low Resistance State (LRS)**.
+  * **RESET Operation (Write 0):** Applying a negative voltage ($<-0.92V$) switches the device back to a **High Resistance State (HRS)**.
 
-[cite\_start]In this project, we simulate a **2x2 Array** using the **1T1R architecture**[cite: 333]. This means every memory cell is paired with a selector transistor (NMOS) to ensure precise control and prevent electrical interference between neighboring cells.
+In this project, we simulate a **2x2 Array** using the **1T1R architecture**. This means every memory cell is paired with a selector transistor (NMOS) to ensure precise control and prevent electrical interference between neighboring cells.
 
 -----
 
