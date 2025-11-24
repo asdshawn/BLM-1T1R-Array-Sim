@@ -59,7 +59,7 @@ Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into
 1.  Open your Ubuntu (WSL) terminal.
 2.  Create a folder and download the project files (clone this repository if using Git).
     ```bash
-    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git
+    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git && cd BLM-1T1R-Array-Sim
     ```
 
 -----
