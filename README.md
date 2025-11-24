@@ -112,6 +112,7 @@ You will see new **.png** image files (e.g., `array_result.png`).
   * **`BLM_array.va`**: The physics-based Verilog-A model of the BLM memory cell.
   * **`2x2_array.sp`**: The SPICE netlist describing the 2x2 circuit and the test sequence.
   * **`1T1R_test.sp`**: (Optional) A simpler test file for a single memory cell.
+  * **`BLM - The Hypothetical Memory Cell.pdf`**: Reference file.
 
 -----
 
