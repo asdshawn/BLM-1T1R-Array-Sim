@@ -59,7 +59,7 @@ Docker allows us to package the complex simulation tools (ngspice, OpenVAF) into
 1.  Open your Ubuntu (WSL) terminal.
 2.  Create a folder and download the project files (clone this repository if using Git).
     ```bash
-    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git && cd BLM-1T1R-Array-Sim
+    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git && cd BLM-1T1R-Array-Sim && chmod +x run.sh
     ```
 
 -----
@@ -92,7 +92,7 @@ docker run --rm -v $(pwd):/work blm_env ./run.sh <SPICE_File> <VerilogA_File>
 **Example (Running the 2x2 Array Test):**
 
 ```bash
-docker run --rm -v $(pwd):/work blm_env ./run.sh 2x2_array.sp BLM_array.va
+docker run --rm -v $(pwd):/work blm_env ./run.sh 2x2_array_v2.sp BLM_memory_v2.va
 ```
 
 ### 3\. View the Results

@@ -1,17 +1,47 @@
 #!/bin/bash
 
-# 1. Check argument count
-if [ "$#" -ne 2 ]; then
-    echo "Error: Invalid number of arguments."
-    echo "Usage: ./run.sh <spice_file.sp> <veriloga_file.va>"
-    echo "Example: ./run.sh 1T1R_test.sp BLM_memory.va"
-    exit 1
+# ==============================================================================
+# PART 1: HOST SIDE BOOTSTRAP
+# This section checks if we are running on the host machine.
+# If so, it spins up the Docker container and runs this script inside it.
+# ==============================================================================
+
+# Check for the existence of the Docker environment file
+if [ ! -f "/.dockerenv" ]; then
+    echo "[Host] 🚀 Detected Host Environment. Launching Docker Container..."
+
+    # Check arguments on Host side
+    if [ "$#" -ne 2 ]; then
+        echo "Error: Invalid number of arguments."
+        echo "Usage: ./run.sh <spice_file.sp> <veriloga_file.va>"
+        echo "Example: ./run.sh 1T1R_test.sp BLM_array.va"
+        exit 1
+    fi
+
+    # Run Docker
+    # --rm: Remove container after exit
+    # -v "$(pwd):/work": Mount current folder to /work
+    # blm_env: The image name
+    # "$0": This script name (e.g., ./run.sh)
+    # "$@": Pass all arguments (file names) to the script inside Docker
+    docker run --rm -v "$(pwd):/work" blm_env "$0" "$@"
+    
+    # Exit the host script after Docker finishes
+    exit $?
 fi
+
+# ==============================================================================
+# PART 2: CONTAINER SIDE LOGIC
+# This section runs ONLY inside the Docker container.
+# It performs the actual compilation, simulation, and image conversion.
+# ==============================================================================
+
+echo "[Docker] 📦 Inside Container. Starting Simulation Workflow..."
 
 SP_FILE="$1"
 VA_FILE="$2"
 
-# 2. Check file existence
+# 1. Check file existence inside Docker
 if [ ! -f "$SP_FILE" ]; then
     echo "Error: SPICE file '$SP_FILE' not found."
     exit 1
@@ -22,10 +52,11 @@ if [ ! -f "$VA_FILE" ]; then
     exit 1
 fi
 
-# 3. Clean up old PostScript files to avoid confusion
+# 2. Clean up old PostScript files to avoid confusion
+echo "[Docker] 🧹 Cleaning up old .ps files..."
 rm -f *.ps
 
-# 4. Compile Verilog-A Model
+# 3. Compile Verilog-A Model
 echo "========================================"
 echo ">>> Step 1/3: Compiling Model $VA_FILE"
 echo "========================================"
@@ -34,7 +65,7 @@ if ! openvaf "$VA_FILE"; then
     exit 1
 fi
 
-# 5. Run SPICE Simulation
+# 4. Run SPICE Simulation
 echo "========================================"
 echo ">>> Step 2/3: Running Simulation $SP_FILE"
 echo "========================================"
@@ -43,7 +74,7 @@ if ! ngspice -b "$SP_FILE"; then
     exit 1
 fi
 
-# 6. Convert Images and Clean Up
+# 5. Convert Images and Clean Up
 echo "========================================"
 echo ">>> Step 3/3: Converting Images..."
 echo "========================================"
@@ -60,9 +91,11 @@ for ps_file in *.ps; do
     echo "  [Converting] $ps_file -> $png_file"
     
     # Convert PS to PNG using Ghostscript
+    # -sDEVICE=png16m : 24-bit color PNG
+    # -r300           : High resolution (300 DPI)
     gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="$png_file" "$ps_file" > /dev/null 2>&1
     
-    # Remove the original PS file after conversion
+    # Remove the original PS file after conversion (as requested)
     rm "$ps_file"
     
     count=$((count + 1))
