@@ -179,6 +179,7 @@ Once the script finishes, check your project folder. You will see new **.png** i
   * **`BLM_memory_v2.va`**: Physics-based Verilog-A model of the BLM memory cell.
   * **`1T1R_cell_v2.sp`**: SPICE netlist for single-cell verification.
   * **`2x2_array_v2.sp`**: SPICE netlist for the 2x2 array simulation.
+  * **`BLM - The Hypothetical Memory Cell.pdf`**: Reference document for BLM project.
 
 -----
 
