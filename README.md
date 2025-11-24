@@ -66,7 +66,7 @@ docker run hello-world
 ```
 
   * **Success:** If you see a message saying `Hello from Docker!`, you are ready to go.
-  * **Failure:** If you see `permission denied` or `connect to the Docker daemon socket`, please refer to the **Troubleshooting** section below.
+  * **Failure:** If you see `permission denied` or `connect to the Docker daemon socket`, please refer to the **[Troubleshooting](#-Troubleshooting)** section below.
 
 ### Step 4: Get the Project Files
 
