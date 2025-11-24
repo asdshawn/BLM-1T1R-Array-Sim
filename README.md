@@ -123,9 +123,9 @@ You will see new **.png** image files (e.g., `array_result.png`).
 
   * **`Dockerfile`**: The recipe file that builds the simulation environment (installs Rust, ngspice, etc.).
   * **`run.sh`**: The automation script that compiles models and converts plots to PNG images.
-  * **`BLM_array.va`**: The physics-based Verilog-A model of the BLM memory cell.
-  * **`2x2_array.sp`**: The SPICE netlist describing the 2x2 circuit and the test sequence.
-  * **`1T1R_test.sp`**: (Optional) A simpler test file for a single memory cell.
+  * **`BLM_memory_v2.va`**: The physics-based Verilog-A model of the BLM memory cell.
+  * **`2x2_array_v2.sp`**: The SPICE netlist describing the 2x2 circuit and the test sequence.
+  * **`1T1R_cell_v2.sp`**: (Optional) A simpler test file for a single memory cell.
   * **`BLM - The Hypothetical Memory Cell.pdf`**: Reference file.
 
 -----
