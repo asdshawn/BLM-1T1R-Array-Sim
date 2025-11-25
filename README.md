@@ -150,11 +150,9 @@ docker run hello-world
 ### Step 4: Get the Project Files
 
 1.  Open your terminal.
-2.  Create a folder and download the project files (or clone this repository).
+2.  Download the project files or clone this repository.
     ```bash
-    mkdir BLM_Project
-    cd BLM_Project
-    # (Ensure .va, .sp, Dockerfile, and run.sh are in this folder)
+    git clone https://github.com/asdshawn/BLM-1T1R-Array-Sim.git && cd BLM-1T1R-Array-Sim && chmod +x run.sh
     ```
 
 -----
@@ -200,6 +198,7 @@ Once the script finishes, check your project folder. You will see new **.png** i
   * **`BLM_memory_v2.va`**: Physics-based Verilog-A model of the BLM memory cell.
   * **`1T1R_cell_v2.sp`**: SPICE netlist for single-cell verification.
   * **`2x2_array_v2.sp`**: SPICE netlist for the 2x2 array simulation.
+  * **`BLM - The Hypothetical Memory Cell.pdf`**: Reference document for BLM project.
 
 -----
 
